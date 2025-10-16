@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 _client = MongoClient(os.getenv("MONGO_URI"))
-_db = _client.get_default_database()  # usa la DB del URI (grindng)
+_db = _client[os.getenv("MONGO_DB")]
 
 
 def db():
