@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from dotenv import load_dotenv
 
@@ -6,6 +5,7 @@ from db import create_indexes
 from auth import auth_bp
 
 load_dotenv()
+
 
 def create_app():
     app = Flask(__name__)
@@ -18,7 +18,7 @@ def create_app():
 
     return app
 
+
 if __name__ == "__main__":
     app = create_app()
-    port = int(os.getenv("PORT", "5000"))
-    app.run(host="0.0.0.0", port=port, debug=True)
+    app.run(host="0.0.0.0", port=8100, debug=True)

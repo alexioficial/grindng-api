@@ -7,12 +7,15 @@ from utils.jwt_utils import generate_jwt, verify_jwt
 
 auth_bp = Blueprint("auth", __name__)
 
+
 def ok(data=None, msg="ok"):
     return jsonify({"status": 0, "msg": msg, "data": data or {}}), 200
+
 
 def err(msg="error", data=None):
     # status 1 siempre representa error
     return jsonify({"status": 1, "msg": msg, "data": data}), 200
+
 
 @auth_bp.post("/register")
 def register():
@@ -31,6 +34,7 @@ def register():
     user_id = str(res.inserted_id)
     return ok({"id": user_id})
 
+
 @auth_bp.post("/login")
 def login():
     body = request.get_json(silent=True) or {}
@@ -46,11 +50,13 @@ def login():
     token = generate_jwt({"sub": str(user["_id"]), "email": email})
     return ok({"token": token})
 
+
 def _get_bearer_token() -> str | None:
     auth = request.headers.get("Authorization") or ""
     if auth.lower().startswith("bearer "):
         return auth.split(" ", 1)[1].strip()
     return None
+
 
 @auth_bp.get("/me")
 def me():
